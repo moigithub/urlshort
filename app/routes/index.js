@@ -29,7 +29,7 @@ module.exports = function (app) {
 
 
 	//var router = app.Router();
-	app.route('/new/:url').get( function (req, res) {
+	app.route('/new/*').get(function (req, res) {
 			var allowInvalid = req.query.allow ?  req.query.allow.toUpperCase() === "TRUE": false;
 			console.log("query>>",JSON.stringify(req.query));
 			console.log("params>>>",JSON.stringify(req.params));
@@ -38,7 +38,14 @@ module.exports = function (app) {
 			//           return res.json({"error":"URL invalid"});
 			// save on whatever other case
 			
-			var validURL = validator.isURL(req.params.url) ;
+			var options =  { 
+				protocols: ['http','https','ftp'], 
+				require_tld: true, require_protocol: false, 
+				require_valid_protocol: true, allow_underscores: false, 
+				host_whitelist: false, host_blacklist: false, 
+				allow_trailing_dot: false, allow_protocol_relative_urls: true 
+			};
+			var validURL = validator.isURL(req.params["0"], options) ;
 			console.log("valid>>> ", validURL);
 //			return res.json(req.params);
 
@@ -48,7 +55,7 @@ module.exports = function (app) {
 			
 			var data = {
 				code: shortid.generate(),
-				target: req.params.url,
+				target: req.params["0"],
 				invalid: allowInvalid
 			};
 			console.log("data>>>>",JSON.stringify(data));
