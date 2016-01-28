@@ -6,7 +6,7 @@ var validator = require('validator');
 var Url = require('../models/urls');
 var path = process.cwd();
 
-var MYURL = "https://shurli.herokuapp.com/";
+var MYURL = process.env.HOST || "https://urlshort-moisesman.c9users.io/";
 
 module.exports = function (app) {
 
@@ -14,16 +14,20 @@ module.exports = function (app) {
 	app.route('/:id')
 		.get(function (req, res) {
 			// busca en la DB el id
-			console.log(JSON.stringify(req.params));
+			//console.log(JSON.stringify(req.params));
 			Url.findOne({code:req.params.id}, function(err, address){
 			    if(err) { return handleError(res, err); }
 			    if(!address) { 
 			    	return res.status(404).json({"error":"No short url found for given input"}); 
 			    }
 				// redirect to the url
-				//res.redirect(address.target);
-				console.log(JSON.stringify(address));
-				res.json(address);
+				//console.log(address.target);
+// relative url??
+// if not protocol found, add http:// as default
+				var target = (address.target.search("://") >=0) ? address.target : "http://"+address.target;
+				res.redirect(target);
+				//console.log(JSON.stringify(address));
+				//res.json(address);
 			});
 		});
 
@@ -31,8 +35,8 @@ module.exports = function (app) {
 	//var router = app.Router();
 	app.route('/new/*').get(function (req, res) {
 			var allowInvalid = req.query.allow ?  req.query.allow.toUpperCase() === "TRUE": false;
-			console.log("query>>",JSON.stringify(req.query));
-			console.log("params>>>",JSON.stringify(req.params));
+			//console.log("query>>",JSON.stringify(req.query));
+			//console.log("params>>>",JSON.stringify(req.params));
 			// check url valid
 			// if NOT valid &&    ?allow=false
 			//           return res.json({"error":"URL invalid"});
@@ -46,7 +50,7 @@ module.exports = function (app) {
 				allow_trailing_dot: false, allow_protocol_relative_urls: true 
 			};
 			var validURL = validator.isURL(req.params["0"], options) ;
-			console.log("valid>>> ", validURL);
+			//console.log("valid>>> ", validURL);
 //			return res.json(req.params);
 
 			if (!validURL && !allowInvalid) {
@@ -58,7 +62,7 @@ module.exports = function (app) {
 				target: req.params["0"],
 				invalid: allowInvalid
 			};
-			console.log("data>>>>",JSON.stringify(data));
+			//console.log("data>>>>",JSON.stringify(data));
 			
 			Url.create(data, function(err, address) {
 			    if(err) { return handleError(res, err); }
@@ -66,7 +70,7 @@ module.exports = function (app) {
 			    	"original_url":address.target,
 			    	"short_url":MYURL+ address.code
 			    };
-			    console.log("addr>>>",JSON.stringify(address));
+			    //console.log("addr>>>",JSON.stringify(address));
 			    
 			    return res.status(201).json(result);
 			  });
@@ -77,6 +81,6 @@ module.exports = function (app) {
 };
 
 function handleError(res, err) {
-	console.log("error");
+//	console.log("error");
   return res.status(500).send(err);
 }

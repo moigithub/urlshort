@@ -41,6 +41,7 @@ app.use('/', express.static(process.cwd() + '/public'));
 routes(app);
 
 var port = process.env.PORT || 8080;
+var host = process.env.HOST  || "https://urlshort-moisesman.c9users.io/";
 app.listen(port,  function () {
-	console.log('Node.js listening on port ' + port + '...');
+	console.log('Node.js listening on port ' + port + '...'+ host);
 });
