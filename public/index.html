@@ -1,39 +1,34 @@
 <!DOCTYPE html>
 
 <html>
-
-	<head>
-		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
-		
-		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
-	</head>
-
-	<header>
-		<p>Welcome, <span id="display-name"></span>!</p>
-		<a class="menu" href="/profile">Profile</a>
-		<p>|</p>
-		<a class="menu" href="/logout">Logout</a>
-	</header>
-
-	<body>
-		<div class="container">
-			<img src="/public/img/clementine_150.png" />
-			<br />
-			<p class="clementine-text">Clementine.js</p>
-		</div>
-	
-		<div class="container">
-			<p>You have clicked the button <span id="click-nbr"></span> times.</p>
-			<br />
-			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
-				<button class="btn btn-delete">RESET</button>
-			</div>
-		</div>
-		
-		<script type="text/javascript" src="common/ajax-functions.js"></script>
-		<script type="text/javascript" src="controllers/clickController.client.js"></script>
-		<script type="text/javascript" src="controllers/userController.client.js"></script>
-	</body>
+  <body>
+	<div class="container">
+	    <h1 class="header">
+	      API Basejump: URL Shortener
+	    </h1>
+	    <blockquote>
+	      User stories:
+	      <ul><li>I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</ul>
+	      <ul><li>When I visit that shortened URL, it will redirect me to my original link.</ul>
+	    </blockquote>
+	    <h3>Example creation usage:</h3>
+	    <code><a href="https://urlshort-moisesman.c9users.io/new/https://www.google.com">https://urlshort-moisesman.c9users.io/new/https://www.google.com</a></code>
+	    <br>
+	    <code><a href="https://urlshort-moisesman.c9users.io/new/http://freecodecamp.com/news">https://urlshort-moisesman.c9users.io/new/http://freecodecamp.com/news</a></code>
+	    <br>If you want to pass a site that doesn't exist (or an invalid url) for some reason you can do:<br>
+	    <code><a href="https://urlshort-moisesman.c9users.io/new/invalid?allow=true">https://urlshort-moisesman.c9users.io/new/invalid?allow=true</a></code>
+	    <h3>Example creation output:</h3>
+	    <code>
+	      {
+	        "original_url": "http://freecodecamp.com/news",
+	        "short_url": "https://urlshort-moisesman.c9users.io/4"
+	      }
+	    </code>
+	    <h3>Usage:</h3>
+	    <code><a href="https://urlshort-moisesman.c9users.io/4">https://urlshort-moisesman.c9users.io/4</a></code>
+	    <h3>Will redirect to:</h3>
+	    <code><a href="http://freecodecamp.com/news">http://freecodecamp.com/news</a></code>
+	  </div>
+  </body>
 
 </html>
