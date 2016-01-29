@@ -24,6 +24,7 @@
   "author": "Moises Man",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^2.0.0",
     "express": "^4.12.4",
     "mongoose": "^4.1.0",
     "shortid": "^2.2.4",

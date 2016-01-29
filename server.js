@@ -30,10 +30,8 @@ var routes = require('./app/routes/index.js');
 
 
 var app = express();
-require('dotenv').load();
-
-
-mongoose.connect(process.env.MONGO_URI);
+var MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017';
+mongoose.connect(MONGO_URI);
 
 app.use('/', express.static(process.cwd() + '/public'));
 
