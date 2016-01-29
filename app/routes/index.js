@@ -6,7 +6,7 @@ var validator = require('validator');
 var Url = require('../models/urls');
 var path = process.cwd();
 
-var MYURL = process.env.HOST || "https://urlshort-moisesman.c9users.io/";
+var MYURL = process.env.HOST || "https://smalluri.herokuapp.com/";
 
 module.exports = function (app) {
 
